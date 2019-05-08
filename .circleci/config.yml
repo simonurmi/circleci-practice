@@ -14,11 +14,17 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
   build:
     docker:
       - image: circleci/node:latest
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Build
           command: npm run build
