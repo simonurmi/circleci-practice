@@ -11,9 +11,17 @@ jobs:
       - run:
           name: NPM version
           command: npm -v
+      - restore_cache:
+          name: Restore cached dependencies
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Install dependencies
           command: npm install
+      - save_cache:
+          name: Cache dependencies
+          key: dependency-cache-{{ checksum "package-lock.lock" }}
+          paths:
+            - ~/.npm
       - persist_to_workspace:
           root: .
           paths:
