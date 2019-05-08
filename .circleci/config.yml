@@ -1,8 +1,33 @@
 version: 2
 jobs:
-  build:
+  setup:
     docker:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run: echo "hello world"
+      - run:
+          name: Node version
+          command: node -v
+      - run:
+          name: NPM version
+          command: npm -v
+      - run:
+          name: Install dependencies
+          command: npm install
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: npm run build
+
+  build:
+      docker:
+        - image: circleci/node:latest
+      steps:
+        - checkout
+        - run:
+            name: Test
+            command: npm run test
