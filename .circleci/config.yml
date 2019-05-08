@@ -52,6 +52,17 @@ jobs:
             name: Test
             command: npm run test
 
+  lint:
+      docker:
+        - image: circleci/node:latest
+      steps:
+        - checkout
+        - attach_workspace:
+            at: .
+        - run:
+            name: Lint
+            command: npm run eslint
+
 workflows:
   version: 2
   build_accept_deploy:
